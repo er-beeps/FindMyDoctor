@@ -30,59 +30,124 @@
             </li>
             <li class="breadcrumb-item active">List</li>
         </ol>
-        <!-- Example DataTables Card-->
-        <div class="card mb-3">
-            <div class="card-header">
-                <i class="fa fa-table"></i> List of Appointments
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <c:if test="${role=='admin'}">
-                                <th>Username</th>
-                            </c:if>
-                            <th>Health Institute</th>
-                            <th>Department</th>
-                            <th>Appointment Type</th>
-                            <th>Doctor</th>
-                            <th>Status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
 
-                        <c:forEach items="${alist}" var="i">
-                            <tr>
-                                <td>${i.firstName}</td>
-                                <td>${i.lastName}</td>
-                                <c:if test="${role=='admin'}">
-                                    <td>${i.userName}</td>
-                                </c:if>
-                                <td>${i.selectHealthinstitute}</td>
-                                <td>${i.department}</td>
-                                <td>${i.atype}</td>
-                                <td>${i.selectdoctor} </td>
-                                <td>
-                                    <div class="fa fa-circle-o-notch fa-spin fa-fw"></div>
-                                        ${i.status}</td>
-                            </tr>
-                        </c:forEach>
-
-                        </tbody>
-                    </table>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-table"></i> Recent Appointment
                 </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <c:if test="${role=='admin'}">
+                                    <th>Username</th>
+                                </c:if>
+                                <th>Health Institute</th>
+                                <th>Department</th>
+                                <th>Appointment Type</th>
+                                <th>Doctor</th>
+                                <th>Preferred Date</th>
+                                <th>Preferred time</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            <c:forEach items="${ralist}" var="i">
+                                <tr>
+                                    <td>${i.firstName}</td>
+                                    <td>${i.lastName}</td>
+                                    <c:if test="${role=='admin'}">
+                                        <td>${i.userName}</td>
+                                    </c:if>
+                                    <td>${i.selectHealthinstitute}</td>
+                                    <td>${i.department}</td>
+                                    <td>${i.atype}</td>
+                                    <td>${i.selectdoctor} </td>
+                                    <td>${i.preferredDate} </td>
+                                    <td>${i.preferredTime} </td>
+                                    <td>
+                                        <div class="fa fa-circle-o-notch fa-spin fa-fw"></div>
+                                            ${i.status}</td>
+                                </tr>
+                            </c:forEach>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer small text-muted">Updated today !!</div>
             </div>
-            <div class="card-footer small text-muted">Updated today !!</div>
+        <br>
+        <br>
+
+        <p>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            View More
+        </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-table"></i> List of Appointments
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <c:if test="${role=='admin'}">
+                                    <th>Username</th>
+                                </c:if>
+                                <th>Health Institute</th>
+                                <th>Department</th>
+                                <th>Appointment Type</th>
+                                <th>Doctor</th>
+                                <th>Preferred Date</th>
+                                <th>Preferred time</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <c:forEach items="${alist}" var="i">
+                                <tr>
+                                    <td>${i.firstName}</td>
+                                    <td>${i.lastName}</td>
+                                    <c:if test="${role=='admin'}">
+                                        <td>${i.userName}</td>
+                                    </c:if>
+                                    <td>${i.selectHealthinstitute}</td>
+                                    <td>${i.department}</td>
+                                    <td>${i.atype}</td>
+                                    <td>${i.selectdoctor} </td>
+                                    <td>${i.preferredDate} </td>
+                                    <td>${i.preferredTime} </td>
+                                    <td>
+                                        <div class="fa fa-circle-o-notch fa-spin fa-fw"></div>
+                                            ${i.status}</td>
+                                </tr>
+                            </c:forEach>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer small text-muted">Updated today !!</div>
+            </div>
         </div>
 
     </div>
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<%--<script src="/vendor/jquery/jquery.min.js"></script>--%>
+<script src="/vendor/jquery/jquery.min.js"></script>
 <script
         src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="

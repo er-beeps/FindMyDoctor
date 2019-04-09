@@ -332,7 +332,7 @@
                                 <option> Eyecare</option>
                                 <option> Dental</option>
                                 <option> Other medical specialties, including radiology</option>
-                                <option> I’m not sure what kind of appointment I need…</option>
+                                <option> I am not sure what kind of appointment I need</option>
                             </select>
                         </div>
 
@@ -344,6 +344,18 @@
                                     <option>${doctor.firstName} ${doctor.lastName} </option>
                                 </c:forEach>
                             </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pda">Preferred date for appointment</label>
+                            <input class="form-control" id="pda" type="date" name="preferred_date"
+                                   aria-describedby="nameHelp"  required>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Preferred Time</label>
+                            <input class="form-control" type="time" name="preferred_time" required="required"
+                                   autocomplete="off">
                         </div>
 
 

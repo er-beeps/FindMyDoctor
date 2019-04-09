@@ -53,7 +53,6 @@ public class DoctorServlet extends HttpServlet {
             new DoctorService().deleteDoctorById(id);
 
             List<Doctor> doctorList = new DoctorService().getAllDoctors();
-
             request.setAttribute("dlist", doctorList);
             request.getRequestDispatcher("/doctor/listdoc.jsp").forward(request, response);
         }
@@ -87,7 +86,6 @@ public class DoctorServlet extends HttpServlet {
                 System.out.println("Value updated");
 
                 List<Doctor> doctorList = new DoctorService().getAllDoctors();
-
                 request.setAttribute("dlist", doctorList);
                 request.getRequestDispatcher("/doctor/listdoc.jsp").forward(request, response);
             }
@@ -114,7 +112,6 @@ public class DoctorServlet extends HttpServlet {
                 System.out.println("Value inserted");
 
                 List<Doctor> doctorList = new DoctorService().getAllDoctors();
-
                 request.setAttribute("dlist", doctorList);
                 request.getRequestDispatcher("/doctor/listdoc.jsp").forward(request, response);
             }

@@ -2,7 +2,7 @@
 <%--
   Created by IntelliJ IDEA.
   User: Bipin Khatiwada
-  Date: 7/3/2018
+  CurrentDate: 7/3/2018
   Time: 3:41 PM
   To change this template use File | Settings | File Templates.
 --%>
@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Add new Patient</title>
+    <title>Add new Member</title>
     <!-- Bootstrap core CSS-->
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom fonts for this template-->

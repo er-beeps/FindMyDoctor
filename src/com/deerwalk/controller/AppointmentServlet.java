@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.sql.Timestamp;
 
 @WebServlet(name = "AppointmentServlet")
 public class AppointmentServlet extends HttpServlet {
@@ -43,7 +44,6 @@ public class AppointmentServlet extends HttpServlet {
 
             HttpSession session = request.getSession();
             String userName = (String) session.getAttribute("uname");
-            System.out.println("user name:  " +userName);
              User user = new UserService().getUserByUserName(userName);
             request.setAttribute("u", user);
 
@@ -61,6 +61,12 @@ public class AppointmentServlet extends HttpServlet {
 
             List<Appointment> appointmentList = new AppointmentService().getAllAppointmentsByUserName(userName);
             request.setAttribute("alist", appointmentList);
+            System.out.println("appointmentList2: "+appointmentList);
+
+            List<Appointment> recentappointmentList = new AppointmentService().getRecentAppointmentByUserName(userName);
+            request.setAttribute("ralist", recentappointmentList);
+            System.out.println("recentappointment2: " +recentappointmentList);
+
             request.getRequestDispatcher("/appointment/viewappointment.jsp").forward(request, response);
 
         } else if (page.equalsIgnoreCase("viewAppointments")) {
@@ -90,8 +96,8 @@ public class AppointmentServlet extends HttpServlet {
                 json.put("province",member.getProvince());
                 json.put("zone",member.getZone());
                 json.put("district",member.getDistrict());
-                System.out.println("json.toString() = " + json.toString());
-                out.print(json.toString());
+                System.out.println("json.toString: " +json.toString());
+                out.println(json.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -103,6 +109,9 @@ public class AppointmentServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         String page = request.getParameter("page");
+
+        java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+
         HttpSession session = request.getSession();
         String userName = (String) session.getAttribute("uname");
 
@@ -123,6 +132,8 @@ public class AppointmentServlet extends HttpServlet {
             String appointmentDepartment = request.getParameter("department");
             String appointmentAtype = request.getParameter("atype");
             String appointmentSelectdoctor = request.getParameter("selectdoctor");
+            String appointmentDate=request.getParameter("preferred_date");
+            String appointmentTime=request.getParameter("preferred_time");
             String appointmentDescription = request.getParameter("description");
 
 
@@ -142,9 +153,12 @@ public class AppointmentServlet extends HttpServlet {
             appointment.setDepartment(appointmentDepartment);
             appointment.setAtype(appointmentAtype);
             appointment.setSelectdoctor(appointmentSelectdoctor);
+            appointment.setPreferredDate(appointmentDate);
+            appointment.setPreferredTime(appointmentTime);
             appointment.setDescription(appointmentDescription);
             appointment.setStatus(StaticFile.Status.PENDING);
             appointment.setUserName(userName);
+            appointment.setTimestamp(date);
 
 
             boolean isInserted = new AppointmentService().insertAppointment(appointment);
@@ -152,6 +166,10 @@ public class AppointmentServlet extends HttpServlet {
 
                 List<Appointment> appointmentList = new AppointmentService().getAllAppointmentsByUserName(userName);
                 request.setAttribute("alist", appointmentList);
+
+                List<Appointment> recentappointmentList = new AppointmentService().getRecentAppointmentByUserName(userName);
+                request.setAttribute("ralist", recentappointmentList);
+
                 request.getRequestDispatcher("/appointment/viewappointment.jsp").forward(request, response);
 
             } else {

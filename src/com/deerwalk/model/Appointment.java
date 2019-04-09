@@ -1,5 +1,7 @@
 package com.deerwalk.model;
 
+import java.sql.Timestamp;
+
 public class Appointment {
     private String id;
     private String firstName;
@@ -19,6 +21,9 @@ public class Appointment {
     private String userName;
     private String department;
     private String selectHealthinstitute;
+    private String preferredDate;
+    private String preferredTime;
+    private Timestamp timestamp;
 
     public void setId(String id) {
         this.id = id;
@@ -163,6 +168,29 @@ public class Appointment {
 
     public String getSelectHealthinstitute() {
         return selectHealthinstitute;
+    }
+
+    public void setPreferredDate(String preferredDate) {
+        this.preferredDate = preferredDate;
+    }
+
+    public String getPreferredDate() {
+        return preferredDate;
+    }
+
+    public void setPreferredTime(String preferredTime) {
+        this.preferredTime = preferredTime;
+    }
+
+        public String getPreferredTime() {
+            return preferredTime;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 }
 

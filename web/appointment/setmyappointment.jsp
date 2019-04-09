@@ -2,7 +2,7 @@
 <%--
   Created by IntelliJ IDEA.
   User: Bipin Khatiwada
-  Date: 7/3/2018
+  CurrentDate: 7/3/2018
   Time: 3:41 PM
   To change this template use File | Settings | File Templates.
 --%>
@@ -49,6 +49,7 @@
                     <input type="hidden" name="uname" value="${uname}">
                     <input type="hidden" name="selecthealthinstitute" value="${s.hiName}">
                     <input type="hidden" name="selectdoctor" value="${s.docName}">
+                    <input type="hidden" name="preferred_time" value="${s.startTime}">
                     <input type="hidden" name="id" value="${ml.id}">
 
                     <div class="form-group">
@@ -315,7 +316,7 @@
                                 <option> Eyecare</option>
                                 <option> Dental</option>
                                 <option> Other medical specialties, including radiology</option>
-                                <option> I’m not sure what kind of appointment I need…</option>
+                                <option> I am not sure what kind of appointment I need</option>
                             </select>
                         </div>
 
@@ -325,6 +326,17 @@
                                 <input class="form-control" id="exampleInputDocName" type="text" name="selectdoctor" value="${s.docName}" required="required" disabled>
                             </div>
 
+                        <div class="form-group">
+                            <label for="pda">Preferred date for appointment</label>
+                            <input class="form-control" id="pda" type="date" name="preferred_date"
+                                   aria-describedby="nameHelp"  required>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Preferred Time</label>
+                            <input class="form-control" type="time" name="preferred_time" value="${s.startTime}" required="required"
+                                   autocomplete="off">
+                        </div>
 
 
                         <div class="form-group">

@@ -15,8 +15,9 @@ public class AppointmentService {
     public boolean insertAppointment(Appointment appointment) {
         boolean isInserted = false;
         Connection conn = new DbConnection().getDbConnection();
+
         try {
-            String sql = "insert into appointment(username,firstname,lastname,gender,dateofbirth,email,phone,address,province,zone,district,healthinstitute,department,atype,selectdoctor,description,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "insert into appointment(username,firstname,lastname,gender,dateofbirth,email,phone,address,province,zone,district,healthinstitute,department,atype,selectdoctor,preferred_date,preferred_time,description,status,current_timedate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, appointment.getUserName());
             ps.setString(2, appointment.getFirstName());
@@ -33,10 +34,12 @@ public class AppointmentService {
             ps.setString(13, appointment.getDepartment());
             ps.setString(14, appointment.getAtype());
             ps.setString(15, appointment.getSelectdoctor());
-            ps.setString(16, appointment.getDescription());
-            ps.setString(17, appointment.getStatus());
+            ps.setString(16,appointment.getPreferredDate());
+            ps.setString(17,appointment.getPreferredTime());
+            ps.setString(18, appointment.getDescription());
+            ps.setString(19, appointment.getStatus());
+            ps.setTimestamp(20,appointment.getTimestamp());
 
-            System.out.println("healthinstitute" +appointment.getSelectHealthinstitute());
             int affectedRows = ps.executeUpdate();
             if (affectedRows > 0) {
                 isInserted = true;
@@ -61,7 +64,7 @@ public class AppointmentService {
         List<Appointment> appointmentList = new ArrayList<>();
         Connection conn = new DbConnection().getDbConnection();
         try {
-            String sql = "select * from appointment where username=?";
+            String sql = "select * from appointment where username=? ORDER by current_timedate DESC";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, userName);
             ResultSet rs = ps.executeQuery();
@@ -83,11 +86,13 @@ public class AppointmentService {
                 appointment.setDepartment(rs.getString("department"));
                 appointment.setAtype(rs.getString("atype"));
                 appointment.setSelectdoctor(rs.getString("selectdoctor"));
+                appointment.setPreferredDate(rs.getString("preferred_date"));
+                appointment.setPreferredTime(rs.getString("preferred_time"));
                 appointment.setDescription(rs.getString("description"));
                 appointment.setStatus(rs.getString("status"));
 
                 appointmentList.add(appointment);
-
+                System.out.println("appointmenList1: " +appointmentList);
             }
 
         } catch (Exception e) {
@@ -100,6 +105,57 @@ public class AppointmentService {
             }
         }
         return appointmentList;
+    }
+
+    public List<Appointment> getRecentAppointmentByUserName(String userName) {
+        List<Appointment> recentappointmentList = new ArrayList<>();
+        Connection conn = new DbConnection().getDbConnection();
+        try {
+            String sql = "select * from appointment a1 where current_timedate=(SELECT MAX(a1.current_timedate) from appointment a1 where a1.username=?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, userName);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Appointment appointment = new Appointment();
+                appointment.setFirstName(rs.getString("firstname"));
+                appointment.setLastName(rs.getString("lastname"));
+                appointment.setUserName(rs.getString("username"));
+                appointment.setGender(rs.getString("gender"));
+                appointment.setDob(rs.getString("dateofbirth"));
+                appointment.setEmail(rs.getString("email"));
+                appointment.setPhone(rs.getString("phone"));
+                appointment.setAddress(rs.getString("address"));
+                appointment.setProvince(rs.getString("province"));
+                appointment.setZone(rs.getString("zone"));
+                appointment.setDistrict(rs.getString("district"));
+                appointment.setSelectHealthinstitute(rs.getString("healthinstitute"));
+                appointment.setDepartment(rs.getString("department"));
+                appointment.setAtype(rs.getString("atype"));
+                appointment.setSelectdoctor(rs.getString("selectdoctor"));
+                appointment.setPreferredDate(rs.getString("preferred_date"));
+                appointment.setPreferredTime(rs.getString("preferred_time"));
+                appointment.setDescription(rs.getString("description"));
+                appointment.setStatus(rs.getString("status"));
+
+                recentappointmentList.add(appointment);
+
+                System.out.println("preferred date :" +appointment.getPreferredDate());
+                System.out.println("preferred time :" +appointment.getPreferredTime());
+                System.out.println("recentAppoinment1: " +recentappointmentList);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return recentappointmentList;
     }
 
     public List<Appointment> getAllAppointments() {
@@ -127,6 +183,8 @@ public class AppointmentService {
                 appointment.setDepartment(rs.getString("department"));
                 appointment.setAtype(rs.getString("atype"));
                 appointment.setSelectdoctor(rs.getString("selectdoctor"));
+                appointment.setPreferredDate(rs.getString("preferred_date"));
+                appointment.setPreferredTime(rs.getString("preferred_time"));
                 appointment.setDescription(rs.getString("description"));
                 appointment.setStatus(rs.getString("status"));
 
